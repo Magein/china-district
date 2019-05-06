@@ -2556,7 +2556,7 @@ INSERT INTO `region` VALUES ('469039', '中沙', '460000');
 INSERT INTO `region` VALUES ('471004', '高新区', '410300');
 INSERT INTO `region` VALUES ('471005', '其它区', '410300');
 INSERT INTO `region` VALUES ('500000', '重庆', '0');
-INSERT INTO `region` VALUES ('500100', '重庆市', '500100');
+INSERT INTO `region` VALUES ('500100', '重庆市', '50000');
 INSERT INTO `region` VALUES ('500101', '万州', '500100');
 INSERT INTO `region` VALUES ('500102', '涪陵', '500100');
 INSERT INTO `region` VALUES ('500103', '渝中', '500100');
