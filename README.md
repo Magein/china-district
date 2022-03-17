@@ -15,5 +15,28 @@
 
 [邮政编码对照表、城市电话区号对照表](http://www.ip138.com/post/)
 
-### 文件
+### 数据
+
+数据根据static/Region.php获取
+
+```php
+$item=[
+    'code' => 110000,
+    'parent_code' => 0,
+    'name' => '北京',
+    'postal_code' => 100000,
+    'tel_code' => '010',
+    'letter' => 'bei jing shi',
+    'initial' => 'B',
+    'type' => 1,// 1 是行政区域划分 0 不是
+]
+
+```
+
+正式使用应该使用 static/RegionCode.php的数据，提取的是type为1的即规范的行政区域划分
+
+### 注意
+
+四个直辖市(北京、天津、上海、重庆)
+在RegionCode.php中各自新增一个北京市、天津市、上海市、重庆市、充当省市区的市角色
 

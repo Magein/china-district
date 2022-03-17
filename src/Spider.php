@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__ . '/../Make.php';
+require __DIR__ . '/../Write.php';
 
 class Spider
 {
@@ -8,6 +8,11 @@ class Spider
     {
         $filename = __DIR__ . '/year/2020/origin.html';
         $codename = __DIR__ . '/year/2020/codes.php';
+
+        if (is_file($codename)) {
+            return require($codename);
+        }
+
         if (!is_file($filename)) {
             $filepath = pathinfo($filename, PATHINFO_DIRNAME);
             if (!is_dir($filepath)) {
@@ -36,7 +41,7 @@ class Spider
                     $string .= "\n";
                 }
             }
-            (new Make())->write($codename, $string);
+            (new Write())->write($codename, $string);
         }
 
         return $data;
