@@ -1,10 +1,19 @@
-### 行政区划代码对照表
-  >  参考：[]()http://www.mca.gov.cn/article/sj/xzqh/2018/
-  
-### 邮政编码对照表、城市电话区号对照表	
+### 行政区划的概念
 
- > 参考：[]()http://www.ip138.com/post/
- 
-### 省市划分
+> 行政区域彼此之间有明确的地理分界线，并各自由自己的区政府、县政府、市政府直接管理，有自己的人大会。且有自己的上级和下级行政关系
 
- > 参考: []()http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2017/index.html
+[政区划代码对照表](http://www.mca.gov.cn/article/sj/xzqh/2018/)
+
+一般也会存在一些经济区，如
+
+合肥的高新区、新站区等这些区域不属于行政区
+
+这些区域是地方政府为集中力量发展经济为目的而设置的特定区域，本质属于功能区，功能区不受行政区划限制，可以跨行政区
+
+这些区域可以参考国家统计局：
+[2017年统计用区划代码和城乡划分代码](http://www.stats.gov.cn/tjsj/tjbz/tjyqhdmhcxhfdm/2017/index.html)
+
+[邮政编码对照表、城市电话区号对照表](http://www.ip138.com/post/)
+
+### 文件
+
