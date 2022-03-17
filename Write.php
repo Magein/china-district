@@ -32,7 +32,7 @@ class Make
             unset($item['standard']);
             $is_standard = $standard[$item['code']] ?? '';
             unset($item['is_standard']);
-            // 1 标准的 2
+            // 1 标准的 0 不是
             $item['type'] = $is_standard ? 1 : 0;
 
             foreach ($item as $v => $val) {
@@ -77,5 +77,10 @@ class Make
             $data .= "\n";
         }
         $this->writeStatic('TelCode.php', $data);
+    }
+
+    public function writeJson($data)
+    {
+        $this->write(__DIR__ . '/js/region_code.json', json_encode($data, JSON_UNESCAPED_UNICODE));
     }
 }
