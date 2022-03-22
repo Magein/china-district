@@ -64,7 +64,7 @@ class Write
             $item['type'] = $is_standard ? 1 : 0;
 
             foreach ($item as $v => $val) {
-                if (in_array($v, ['id', 'parent_id', 'postal_code', 'type'])) {
+                if (in_array($v, ['id', 'parent_id', 'postal', 'type'])) {
                     $data .= "      '$v'=>$val,";
                 } else {
                     $data .= "      '$v'=>'$val',";
@@ -96,7 +96,7 @@ class Write
     {
         $data = '';
         foreach ($codes as $item) {
-            $data .= "  '{$item['id']}'=>'" . $item['postal_code'] . "',";
+            $data .= "  '{$item['id']}'=>'" . $item['postal'] . "',";
             $data .= "\n";
         }
         $this->static('PostalCode.php', $data);
@@ -106,7 +106,7 @@ class Write
     {
         $data = '';
         foreach ($codes as $item) {
-            $data .= "  '{$item['id']}'=>'" . $item['tel_code'] . "',";
+            $data .= "  '{$item['id']}'=>'" . $item['tel'] . "',";
             $data .= "\n";
         }
         $this->static('TelCode.php', $data);
