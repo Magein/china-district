@@ -126,22 +126,52 @@ class Write
 
     public function regionChildren($data)
     {
-        $recursion = function ($data) {
-            $relation_field = 'parent_code';
-            $result = [];
-            foreach ($data as $key => $item) {
-                if ($item['type'] != 1 && !$this->zxs($item['name'])) {
-                    continue;
-                }
-                if (isset($data[$item[$relation_field]])) {
-                    $data[$item[$relation_field]]['children'][] = &$data[$key];
-                } else {
-                    $result[] = &$data[$key];
-                }
-            }
-            return $result;
-        };
 
-        return $recursion($data);
+        $records = [];
+        foreach ($data as $item) {
+            if ($item['parent_code'] == 0) {
+                $records[$item['code']] = [
+                    'code' => $item['code'],
+                    'parent_code' => $item['parent_code'],
+                    'name' => $item['name'],
+                    'children' => []
+                ];
+            }
+        }
+
+        $codes = require('./src/static/RegionCode.php');
+
+        foreach ($data as $item) {
+            $parent_code = $item['parent_code'];
+            if ($parent_code == 0) {
+                continue;
+            }
+            if (isset($records[$parent_code])) {
+                $code = $item['code'];
+                $children = [];
+                foreach ($data as $val) {
+                    if ($val['parent_code'] == $code) {
+                        if (isset($codes[$val['code']])) {
+                            $children[] = [
+                                'code' => $val['code'],
+                                'parent_code' => $val['parent_code'],
+                                'name' => $val['name']
+                            ];
+                        }
+                    }
+                }
+
+                $records[$parent_code]['children'][$code] = [
+                    'code' => $code,
+                    'parent_code' => $item['parent_code'],
+                    'name' => $item['name'],
+                    'children' => $children
+                ];
+            }
+        }
+
+        $this->json('region_children_code.json', json_encode($records, JSON_UNESCAPED_UNICODE));
+
+        return $records;
     }
 }
