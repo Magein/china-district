@@ -42,16 +42,16 @@ class Write
 
         $data = "";
         foreach ($codes as $item) {
-            $code = $item['code'];
+            $code = $item['id'];
             if (empty($code)) {
                 continue;
             }
 
             $name = $item['name'];
             if (preg_match('/.*市$/', $name)) {
-                $parent = $codes[$item['parent_code']];
-                $parent_code = $parent['parent_code'];
-                if ($parent_code == 0 && !$this->zxs($name)) {
+                $parent = $codes[$item['parent_id']];
+                $parent_id = $parent['parent_id'];
+                if ($parent_id == 0 && !$this->zxs($name)) {
                     $name = mb_substr($name, 0, -1);
                 }
             }
@@ -64,7 +64,7 @@ class Write
             $item['type'] = $is_standard ? 1 : 0;
 
             foreach ($item as $v => $val) {
-                if (in_array($v, ['code', 'parent_code', 'postal_code', 'type'])) {
+                if (in_array($v, ['id', 'parent_id', 'postal_code', 'type'])) {
                     $data .= "      '$v'=>$val,";
                 } else {
                     $data .= "      '$v'=>'$val',";
@@ -96,7 +96,7 @@ class Write
     {
         $data = '';
         foreach ($codes as $item) {
-            $data .= "  '{$item['code']}'=>'" . $item['postal_code'] . "',";
+            $data .= "  '{$item['id']}'=>'" . $item['postal_code'] . "',";
             $data .= "\n";
         }
         $this->static('PostalCode.php', $data);
@@ -106,7 +106,7 @@ class Write
     {
         $data = '';
         foreach ($codes as $item) {
-            $data .= "  '{$item['code']}'=>'" . $item['tel_code'] . "',";
+            $data .= "  '{$item['id']}'=>'" . $item['tel_code'] . "',";
             $data .= "\n";
         }
         $this->static('TelCode.php', $data);
@@ -129,10 +129,10 @@ class Write
 
         $records = [];
         foreach ($data as $item) {
-            if ($item['parent_code'] == 0) {
-                $records[$item['code']] = [
-                    'code' => $item['code'],
-                    'parent_code' => $item['parent_code'],
+            if ($item['parent_id'] == 0) {
+                $records[$item['id']] = [
+                    'id' => $item['id'],
+                    'parent_id' => $item['parent_id'],
                     'name' => $item['name'],
                     'children' => []
                 ];
@@ -142,28 +142,28 @@ class Write
         $codes = require('./src/static/RegionCode.php');
 
         foreach ($data as $item) {
-            $parent_code = $item['parent_code'];
-            if ($parent_code == 0) {
+            $parent_id = $item['parent_id'];
+            if ($parent_id == 0) {
                 continue;
             }
-            if (isset($records[$parent_code])) {
-                $code = $item['code'];
+            if (isset($records[$parent_id])) {
+                $code = $item['id'];
                 $children = [];
                 foreach ($data as $val) {
-                    if ($val['parent_code'] == $code) {
-                        if (isset($codes[$val['code']])) {
+                    if ($val['parent_id'] == $code) {
+                        if (isset($codes[$val['id']])) {
                             $children[] = [
-                                'code' => $val['code'],
-                                'parent_code' => $val['parent_code'],
+                                'id' => $val['id'],
+                                'parent_id' => $val['parent_id'],
                                 'name' => $val['name']
                             ];
                         }
                     }
                 }
 
-                $records[$parent_code]['children'][$code] = [
-                    'code' => $code,
-                    'parent_code' => $item['parent_code'],
+                $records[$parent_id]['children'][$code] = [
+                    'id' => $code,
+                    'parent_id' => $item['parent_id'],
                     'name' => $item['name'],
                     'children' => $children
                 ];
