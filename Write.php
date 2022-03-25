@@ -34,7 +34,7 @@ class Write
         file_put_contents($path, $content);
     }
 
-    public function region($codes, $standard = [])
+    public function district($codes, $standard = [])
     {
         if (!is_array($standard)) {
             $standard = [];
@@ -74,10 +74,10 @@ class Write
             $data .= "  ],";
             $data .= "\n";
         }
-        $this->static('Region.php', $data);
+        $this->static('District.php', $data);
     }
 
-    public function regionCode($codes)
+    public function districtCode($codes)
     {
         $data = '';
         foreach ($codes as $key => $item) {
@@ -89,7 +89,7 @@ class Write
             $data .= "  $key=>'" . $item['name'] . "',";
             $data .= "\n";
         }
-        $this->static('RegionCode.php', $data);
+        $this->static('DistrictCode.php', $data);
     }
 
     public function postalCode($codes)
@@ -112,19 +112,19 @@ class Write
         $this->static('TelCode.php', $data);
     }
 
-    public function jsonRegionCode()
+    public function jsonDistrictCode()
     {
-        $data = require(__DIR__ . '/src/static/RegionCode.php');
+        $data = require(__DIR__ . '/src/static/DistrictCode.php');
 
-        $this->json('region_code.json', json_encode($data, JSON_UNESCAPED_UNICODE));
+        $this->json('district_code.json', json_encode($data, JSON_UNESCAPED_UNICODE));
     }
 
-    public function jsonRegionChild($data)
+    public function jsonDistrictChild($data)
     {
-        $this->json('region_code.json', json_encode($data, JSON_UNESCAPED_UNICODE));
+        $this->json('district_code.json', json_encode($data, JSON_UNESCAPED_UNICODE));
     }
 
-    public function regionChildren($data)
+    public function districtChildren($data)
     {
 
         $records = [];
@@ -139,7 +139,7 @@ class Write
             }
         }
 
-        $codes = require('./src/static/RegionCode.php');
+        $codes = require('./src/static/DistrictCode.php');
 
         foreach ($data as $item) {
             $parent_id = $item['parent_id'];
@@ -170,7 +170,7 @@ class Write
             }
         }
 
-        $this->json('region_children_code.json', json_encode($records, JSON_UNESCAPED_UNICODE));
+        $this->json('district_children_code.json', json_encode($records, JSON_UNESCAPED_UNICODE));
 
         return $records;
     }

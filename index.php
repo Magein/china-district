@@ -2,7 +2,7 @@
 
 require './src/Spider.php';
 
-$codes = require('./src/static/Region.php');
+$codes = require('./src/static/District.php');
 
 //$spider = new Spider();
 //$standard = $code = $spider->year2020();
@@ -13,7 +13,7 @@ $make = new Write();
 //$make->postalCode($codes);
 //$make->telCode($codes);
 //$make->jsonRegionCode();
-$result = $make->regionChildren($codes);
+$result = $make->districtChildren($codes);
 die();
 
 
