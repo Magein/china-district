@@ -115,19 +115,17 @@ class Write
     public function jsonDistrictCode()
     {
         $data = require(__DIR__ . '/src/static/DistrictCode.php');
+        $data = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $this->json('district_code.json', $data);
 
-        $this->json('district_code.json', json_encode($data, JSON_UNESCAPED_UNICODE));
-    }
-
-    public function jsonDistrictChild($data)
-    {
-        $this->json('district_code.json', json_encode($data, JSON_UNESCAPED_UNICODE));
+        $data = preg_replace('/"([0-9]{6})"/', '$1', $data);
+        $this->json('district_code.js', 'const districtCode=' . $data);
     }
 
     public function districtChildren($data)
     {
-
         $records = [];
+
         foreach ($data as $item) {
             if ($item['parent_id'] == 0) {
                 $records[$item['id']] = [
@@ -170,7 +168,44 @@ class Write
             }
         }
 
-        $this->json('district_children_code.json', json_encode($records, JSON_UNESCAPED_UNICODE));
+
+        $framework = [];
+        foreach ($records as $item) {
+
+            $childrens = array_values($item['children']);
+
+            foreach ($childrens as $key => $children) {
+
+                $chs = array_values($children['children']);
+                foreach ($chs as $k => $ch) {
+                    $chs[$k] = [
+                        'value' => $ch['id'],
+                        'label' => $ch['name'],
+                    ];
+                }
+
+                $childrens[$key] = [
+                    'value' => $children['id'],
+                    'label' => $children['name'],
+                    'children' => $chs
+                ];
+            }
+
+            $framework[] = [
+                'value' => $item['id'],
+                'label' => $item['name'],
+                'children' => $childrens
+            ];
+        }
+        $framework = json_encode($framework, JSON_UNESCAPED_UNICODE);
+        $this->json('framework.js', 'export default ' . $framework);
+
+
+        $data = json_encode($records, JSON_UNESCAPED_UNICODE);
+        $this->json('district_children_code.json', $data);
+
+        $data = preg_replace('/"([0-9]{6})"/', '$1', $data);
+        $this->json('district_children_code.js', 'const districtChildren=' . $data);
 
         return $records;
     }

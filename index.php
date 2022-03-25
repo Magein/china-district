@@ -12,8 +12,8 @@ $make = new Write();
 //$make->regionCode($codes);
 //$make->postalCode($codes);
 //$make->telCode($codes);
-//$make->jsonRegionCode();
-$result = $make->districtChildren($codes);
-die();
+$make->jsonDistrictCode();
+$make->districtChildren($codes);
+
 
 
