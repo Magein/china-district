@@ -1,19 +1,33 @@
 <?php
 
-require './src/Spider.php';
+require 'vendor/autoload.php';
 
-$codes = require('./src/static/District.php');
+!defined('ROOT_PATH') && define('ROOT_PATH', __DIR__);
+!defined('SRC_PATH') && define('SRC_PATH', ROOT_PATH . '/src');
+!defined('STATIC_PATH') && define('STATIC_PATH', SRC_PATH . '/static');
+!defined('JS_PATH') && define('JS_PATH', STATIC_PATH . '/js');
+!defined('PHP_PATH') && define('PHP_PATH', STATIC_PATH . '/php');
+!defined('JSON_PATH') && define('JSON_PATH', STATIC_PATH . '/json');
 
-//$spider = new Spider();
-//$standard = $code = $spider->year2020();
+spl_autoload_register(function ($class) {
+    $path = ROOT_PATH . '/' . preg_replace('/Magein\\\ChinaDistrict/', 'src', $class) . '.php';
+    if (is_file($path)) {
+        require $path;
+    }
+});
 
-$make = new Write();
-//$make->region($codes, $standard);
-//$make->regionCode($codes);
-//$make->postalCode($codes);
-//$make->telCode($codes);
-$make->jsonDistrictCode();
-$make->districtChildren($codes);
+$gaode = new \Magein\ChinaDistrict\Platform\GaoDe();
+$gaode->makeDistrict();
+$gaode->makeDistrictCode();
+$gaode->makeDistrictLevel();
+$gaode->makeFramework();
+$gaode->makeJson();
+
+
+
+
+
+
 
 
 

@@ -1,6 +1,9 @@
-### 名称更新
+### 更新日志
 
-2022-03-25名称由region更新为china-district
+1. 2022-03-25名称由region更新为china-district
+2. 2022-03-38数据源由国家统计局页面抓取修改成高德api
+
+### 名称更新
 
 使用district的原因：
 
@@ -28,7 +31,7 @@
 
 ### 数据
 
-数据根据static/District.php获取
+数据根据src/static/District.php获取
 
 ```php
 [
@@ -43,19 +46,9 @@
     // 区号
     'tel' => '010',
     // 拼音
-    'letter' => 'bei jing shi',
-    // 首字母
-    'initial' => 'B',
-    // 1 是行政区域划分 0 不是
-    'type' => 1,
+    'letter' => 'B',
 ]
 
 ```
 
 正式使用应该使用 static/DistrictCode.php的数据，提取的是type为1的，即标准的行政区域划分
-
-### 注意
-
-四个直辖市(北京、天津、上海、重庆)
-在DistrictCode.php中各自新增一个北京市、天津市、上海市、重庆市、充当省市区的市角色以便于三级联动
-
