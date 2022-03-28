@@ -20,8 +20,6 @@ class Write
             return false;
         }
 
-
-
         $data = "<?php";
         $data .= "\n";
         $data .= 'return [';

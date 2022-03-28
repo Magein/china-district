@@ -14,28 +14,43 @@ class Postal
     public function move()
     {
         $path = POSTAL_PATH . '/Postals.php';
-
         if (!is_file($path)) {
             return false;
         }
 
         $data = require($path);
         $district_code = require(PHP_PATH . '/DistrictCode.php');
+
         $postals = [];
         foreach ($data as $item) {
             $name = trim($item['name']);
             $postal = trim($item['postal']);
-
             $code = array_search($name, $district_code);
+            if ($code) {
+                $postals[$code] = $postal;
+            }
+        }
+        Write::phpFile(PHP_PATH . '/Postals.php', $postals);
 
-            var_dump($name);
-            var_dump($code);
-            die();
+        $path = POSTAL_PATH . '/Tels.php';
+        if (!is_file($path)) {
+            return false;
         }
 
-        var_dump($data);
-        die();
+        $data = require($path);
 
+        $tels = [];
+        foreach ($data as $item) {
+            $name = trim($item['name']);
+            $tel = trim($item['tel']);
+            $code = array_search($name, $district_code);
+            if ($code) {
+                $tels[$code] = $tel;
+            }
+        }
+        Write::phpFile(PHP_PATH . '/Tels.php', $tels);
+
+        return true;
     }
 
     protected function province()
