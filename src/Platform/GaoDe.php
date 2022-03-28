@@ -115,8 +115,7 @@ class GaoDe extends Platform
     protected function listRecursion($data, $parent_id = 0, &$codes = [])
     {
         $pinyin = new Pinyin();
-        $postals = require(STATIC_PATH . '/Postal.php');
-        $tels = require(STATIC_PATH . '/Tel.php');
+        $postals = require(POSTAL_PATH . '/Postal.php');
         foreach ($data as $item) {
             $districts = $item['districts'];
             $id = intval($item['adcode']);
@@ -128,7 +127,7 @@ class GaoDe extends Platform
                 'center' => $item['center'],
                 'level' => $item['level'],
                 'postal' => $postals[$id] ?? '',
-                'tel' => $tels[$id] ?? '',
+                'tel' => $item['citycode'],
                 'letter' => ucfirst(substr($letter, 0, 1))
             ];
             if ($districts) {

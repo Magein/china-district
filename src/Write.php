@@ -20,11 +20,14 @@ class Write
             return false;
         }
 
+
+
         $data = "<?php";
         $data .= "\n";
         $data .= 'return [';
         $data .= $content;
         $data .= "];";
+
         file_put_contents($path, $data);
 
         return true;

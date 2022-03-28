@@ -1,4 +1,11 @@
 <?php
+header('Content-type:text/html,charset=utf-8');
+mb_detect_order(
+    [
+        'UTF-8',
+        'ASCII'
+    ]
+);
 
 require 'vendor/autoload.php';
 
@@ -8,6 +15,7 @@ require 'vendor/autoload.php';
 !defined('JS_PATH') && define('JS_PATH', STATIC_PATH . '/js');
 !defined('PHP_PATH') && define('PHP_PATH', STATIC_PATH . '/php');
 !defined('JSON_PATH') && define('JSON_PATH', STATIC_PATH . '/json');
+!defined('POSTAL_PATH') && define('POSTAL_PATH', STATIC_PATH . '/postal');
 
 spl_autoload_register(function ($class) {
     $path = ROOT_PATH . '/' . preg_replace('/Magein\\\ChinaDistrict/', 'src', $class) . '.php';
@@ -15,6 +23,12 @@ spl_autoload_register(function ($class) {
         require $path;
     }
 });
+
+//$postal = new \Magein\ChinaDistrict\Postal();
+//$postal->make();
+//$postal->move();
+//die();
+
 
 $gaode = new \Magein\ChinaDistrict\Platform\GaoDe();
 $gaode->makeDistrict();
