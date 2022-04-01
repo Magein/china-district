@@ -86,7 +86,9 @@ class GaoDe extends Platform
     {
         foreach ($data as $item) {
             $districts = $item['districts'];
-            $codes[$item['adcode']] = $item['name'];
+            if (!isset($codes[$item['adcode']])) {
+                $codes[$item['adcode']] = $item['name'];
+            }
             if ($districts) {
                 $this->recursion($districts, $codes);
             }
@@ -115,21 +117,31 @@ class GaoDe extends Platform
     protected function listRecursion($data, $parent_id = 0, &$codes = [])
     {
         $pinyin = new Pinyin();
-        $postals = require(PHP_PATH . '/Postal.php');
+        /**
+         * 这里的路径要指向php目录下的，而不是postal目录下的
+         *
+         * 愿意是php目录下是行政区划代码与邮编
+         *
+         * postal目录下是名称与邮编，无法进行关联
+         */
+        $postals = require(PHP_PATH . '/Postals.php');
         foreach ($data as $item) {
             $districts = $item['districts'];
             $id = intval($item['adcode']);
             $letter = $pinyin->abbr($item['name']);
-            $codes[$id] = [
-                'id' => $id,
-                'parent_id' => intval($parent_id),
-                'name' => $item['name'],
-                'center' => $item['center'],
-                'level' => $item['level'],
-                'postal' => $postals[$id] ?? '',
-                'tel' => $item['citycode'],
-                'letter' => ucfirst(substr($letter, 0, 1))
-            ];
+            if (!isset($codes[$id])) {
+                $codes[$id] = [
+                    'id' => $id,
+                    'parent_id' => intval($parent_id),
+                    'name' => $item['name'],
+                    'center' => $item['center'],
+                    'level' => $item['level'],
+                    'postal' => $postals[$id] ?? '',
+                    'tel' => $item['citycode'],
+                    'letter' => ucfirst(substr($letter, 0, 1))
+                ];
+            }
+
             if ($districts) {
                 $this->listRecursion($districts, $id, $codes);
             }

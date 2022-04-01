@@ -32,6 +32,7 @@ spl_autoload_register(function ($class) {
 
 // 获取地区的行政区划代码
 $gaode = new \Magein\ChinaDistrict\Platform\GaoDe();
+// 加载行政区域编码
 $gaode->makeDistrictCode();
 
 // 抓取邮编、区号
@@ -42,12 +43,16 @@ $postal->move();
 
 // 生成地区表，包含名称、行政区划、邮编、区号
 $gaode->makeDistrict();
+
 // 生成层级结构的文件
 $gaode->makeDistrictLevel();
 // 前段使用的文件
 $gaode->makeFramework();
 // json文件
 $gaode->makeJson();
+
+
+\Magein\ChinaDistrict\Write::provinceCity();
 
 
 

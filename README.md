@@ -52,3 +52,11 @@
 ```
 
 正式使用应该使用 static/DistrictCode.php的数据，提取的是type为1的，即标准的行政区域划分
+
+### 特殊值
+
+湖北省-神农架林区在高德地图中标记为city
+
+在国统局官网属于：恩施土家族苗族自治州
+
+[20201201行政区划](http://www.mca.gov.cn/article/sj/xzqh/2020/20201201.html)

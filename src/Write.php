@@ -64,4 +64,35 @@ class Write
 
         return true;
     }
+
+    public static function provinceCity()
+    {
+
+        $data = require(PHP_PATH . '/DistrictLevel.php');
+
+        $result = [];
+        foreach ($data as $item) {
+            $childrens = $item['children'] ?? [];
+            $child = [];
+            if ($childrens) {
+                foreach ($childrens as $key => $val) {
+                    $child[] = [
+                        'value' => $val['id'],
+                        'label' => $val['name'],
+                    ];
+                }
+            }
+            $result[] = [
+                'value' => $item['id'],
+                'label' => $item['name'],
+                'children' => $child
+            ];
+        }
+
+        $result = json_encode($result, JSON_UNESCAPED_UNICODE);
+
+        echo 'export default ' . $result;
+
+        return $result;
+    }
 }
